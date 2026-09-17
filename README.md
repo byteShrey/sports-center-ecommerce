@@ -28,6 +28,13 @@ Redis: `localhost:6379`
 
 > Docker Desktop is required for the compose file. Install it before starting databases.
 
+## API
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/products` | Paged catalog; filter by `brandId`, `typeId`, `keyword`, sort by `name` or `price` |
+| `GET` | `/api/products/{id}` | Single product |
+
 ## Status
 
-Day 1 foundation in progress: project bootstrap, Docker, and catalog entities.
+Catalog read API is in place. Brand and type endpoints, seed data, and the basket are next.

@@ -28,13 +28,27 @@ Redis: `localhost:6379`
 
 > Docker Desktop is required for the compose file. Install it before starting databases.
 
+## Run the API
+
+```bash
+./mvnw spring-boot:run
+```
+
+API base: `http://localhost:8081`
+
+On first startup the app seeds sample brands, types, and products when the catalog is empty.
+
 ## API
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `GET` | `/api/products` | Paged catalog; filter by `brandId`, `typeId`, `keyword`, sort by `name` or `price` |
 | `GET` | `/api/products/{id}` | Single product |
+| `GET` | `/api/brands` | All brands (sorted by name) |
+| `GET` | `/api/types` | All product types (sorted by name) |
+
+CORS is enabled for the React Vite (`5173`) and CRA (`3000`) local origins.
 
 ## Status
 
-Catalog read API is in place. Brand and type endpoints, seed data, and the basket are next.
+Catalog APIs, seed data, and CORS are ready. Next: shopping basket with Redis.

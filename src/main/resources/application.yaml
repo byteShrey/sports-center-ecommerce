@@ -23,3 +23,9 @@ spring:
 app:
   cors:
     allowed-origins: http://localhost:5173,http://localhost:3000
+  jwt:
+    secret: sports-center-dev-secret-key-change-me-to-a-long-random-value
+    expiration-ms: 18000000
+  auth:
+    username: shopper
+    password: Password123

@@ -46,9 +46,15 @@ On first startup the app seeds sample brands, types, and products when the catal
 | `GET` | `/api/products/{id}` | Single product |
 | `GET` | `/api/brands` | All brands (sorted by name) |
 | `GET` | `/api/types` | All product types (sorted by name) |
+| `GET` | `/api/baskets/{id}` | Get basket by id |
+| `POST` | `/api/baskets/{id}` | Create an empty basket |
+| `POST` | `/api/baskets/{id}/items` | Add a product (`productId`, `quantity`) |
+| `PUT` | `/api/baskets/{id}/items/{productId}` | Update item quantity |
+| `DELETE` | `/api/baskets/{id}/items/{productId}` | Remove one product from basket |
+| `DELETE` | `/api/baskets/{id}` | Delete the whole basket |
 
 CORS is enabled for the React Vite (`5173`) and CRA (`3000`) local origins.
 
 ## Status
 
-Catalog APIs, seed data, and CORS are ready. Next: shopping basket with Redis.
+Catalog and Redis basket APIs are ready. Next: orders and JWT auth.

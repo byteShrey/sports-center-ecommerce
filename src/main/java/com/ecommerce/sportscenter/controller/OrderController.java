@@ -30,9 +30,8 @@ public class OrderController {
     public ResponseEntity<OrderDto> createOrder(
             @Valid @RequestBody CreateOrderRequest request,
             Principal principal) {
-        String buyer = principal != null ? principal.getName() : "anonymous";
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(orderService.createOrder(request, buyer));
+                .body(orderService.createOrder(request, principal.getName()));
     }
 
     @GetMapping("/{orderId}")
@@ -42,7 +41,6 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<List<OrderDto>> findMyOrders(Principal principal) {
-        String buyer = principal != null ? principal.getName() : "anonymous";
-        return ResponseEntity.ok(orderService.findForBuyer(buyer));
+        return ResponseEntity.ok(orderService.findForBuyer(principal.getName()));
     }
 }

@@ -52,9 +52,23 @@ On first startup the app seeds sample brands, types, and products when the catal
 | `PUT` | `/api/baskets/{id}/items/{productId}` | Update item quantity |
 | `DELETE` | `/api/baskets/{id}/items/{productId}` | Remove one product from basket |
 | `DELETE` | `/api/baskets/{id}` | Delete the whole basket |
+| `POST` | `/api/auth/login` | Login and receive a JWT (`username` / `password`) |
+| `GET` | `/api/auth/me` | Current authenticated user |
+| `POST` | `/api/orders` | Place order from a basket (**JWT required**) |
+| `GET` | `/api/orders` | List orders for the logged-in buyer (**JWT required**) |
+| `GET` | `/api/orders/{id}` | Get one order (**JWT required**) |
+
+Demo login (configured in `application.yaml`):
+
+```text
+username: shopper
+password: Password123
+```
+
+Send the token as `Authorization: Bearer <token>` on order endpoints.
 
 CORS is enabled for the React Vite (`5173`) and CRA (`3000`) local origins.
 
 ## Status
 
-Catalog and Redis basket APIs are ready. Next: orders and JWT auth.
+Backend catalog, basket, orders, and JWT auth are ready. Next: React frontend.

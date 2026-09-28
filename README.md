@@ -38,6 +38,18 @@ API base: `http://localhost:8081`
 
 On first startup the app seeds sample brands, types, and products when the catalog is empty.
 
+## Run the React client
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+Client: `http://localhost:5173` — the Vite dev server proxies `/api` to the backend on port `8081`.
+
+Pages so far: home, catalog (search, brand/type filters, sorting, pagination), and product details.
+
 ## API
 
 | Method | Endpoint | Description |
@@ -71,4 +83,4 @@ CORS is enabled for the React Vite (`5173`) and CRA (`3000`) local origins.
 
 ## Status
 
-Backend catalog, basket, orders, and JWT auth are ready. Next: React frontend.
+Backend is feature-complete. The React client has the catalog browsing flow; basket, checkout, and sign-in screens are next.

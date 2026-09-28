@@ -2,7 +2,10 @@ import { AppBar, Box, Button, Container, Toolbar, Typography } from '@mui/materi
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 import { NavLink, Link as RouterLink } from 'react-router-dom';
 
-const navItems = [{ label: 'Home', to: '/' }];
+const navItems = [
+  { label: 'Home', to: '/' },
+  { label: 'Catalog', to: '/catalog' },
+];
 
 export default function Header() {
   return (

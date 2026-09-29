@@ -2,8 +2,9 @@ import { AppBar, Badge, Box, Button, Container, IconButton, Toolbar, Typography 
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { NavLink, Link as RouterLink } from 'react-router-dom';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectBasketCount } from '../../features/basket/basketSlice';
+import { signOut } from '../../features/account/accountSlice';
 
 const navItems = [
   { label: 'Home', to: '/' },
@@ -11,7 +12,9 @@ const navItems = [
 ];
 
 export default function Header() {
+  const dispatch = useAppDispatch();
   const basketCount = useAppSelector(selectBasketCount);
+  const user = useAppSelector((state) => state.account.user);
 
   return (
     <AppBar position="sticky" elevation={0}>
@@ -54,6 +57,21 @@ export default function Header() {
               <ShoppingCartOutlinedIcon />
             </Badge>
           </IconButton>
+
+          {user ? (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+              <Typography variant="body2" sx={{ display: { xs: 'none', sm: 'block' } }}>
+                Hi, {user.username}
+              </Typography>
+              <Button color="inherit" variant="outlined" size="small" onClick={() => dispatch(signOut())}>
+                Sign out
+              </Button>
+            </Box>
+          ) : (
+            <Button component={RouterLink} to="/sign-in" color="inherit" variant="outlined" size="small">
+              Sign in
+            </Button>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

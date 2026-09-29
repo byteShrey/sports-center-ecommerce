@@ -4,6 +4,7 @@ import HomePage from '../features/home/HomePage';
 import CatalogPage from '../features/catalog/CatalogPage';
 import ProductDetailsPage from '../features/catalog/ProductDetailsPage';
 import BasketPage from '../features/basket/BasketPage';
+import SignInPage from '../features/account/SignInPage';
 import NotFoundPage from '../features/errors/NotFoundPage';
 
 export const router = createBrowserRouter([
@@ -15,6 +16,7 @@ export const router = createBrowserRouter([
       { path: 'catalog', element: <CatalogPage /> },
       { path: 'catalog/:id', element: <ProductDetailsPage /> },
       { path: 'basket', element: <BasketPage /> },
+      { path: 'sign-in', element: <SignInPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

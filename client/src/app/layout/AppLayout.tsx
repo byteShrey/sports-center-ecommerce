@@ -1,8 +1,17 @@
+import { useEffect } from 'react';
 import { Container } from '@mui/material';
 import { Outlet } from 'react-router-dom';
+import { useAppDispatch } from '../hooks';
+import { loadBasket } from '../../features/basket/basketSlice';
 import Header from './Header';
 
 export default function AppLayout() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(loadBasket());
+  }, [dispatch]);
+
   return (
     <>
       <Header />

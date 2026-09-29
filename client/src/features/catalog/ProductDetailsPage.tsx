@@ -18,6 +18,7 @@ import { catalogApi } from '../../api/catalogApi';
 import type { Product } from '../../models/product';
 import { formatPrice } from '../../utils/format';
 import NotFoundPage from '../errors/NotFoundPage';
+import AddToBasket from '../basket/AddToBasket';
 import ProductImage from './ProductImage';
 
 type PageStatus = 'loading' | 'ready' | 'notFound' | 'error';
@@ -99,6 +100,8 @@ export default function ProductDetailsPage() {
             <Typography color="text.secondary" sx={{ whiteSpace: 'pre-line' }}>
               {product.description || 'No description available.'}
             </Typography>
+            <Divider />
+            <AddToBasket productId={product.id} />
           </Stack>
         </Grid>
       </Grid>

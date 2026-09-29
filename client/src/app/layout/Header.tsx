@@ -1,6 +1,9 @@
-import { AppBar, Box, Button, Container, Toolbar, Typography } from '@mui/material';
+import { AppBar, Badge, Box, Button, Container, IconButton, Toolbar, Typography } from '@mui/material';
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { NavLink, Link as RouterLink } from 'react-router-dom';
+import { useAppSelector } from '../hooks';
+import { selectBasketCount } from '../../features/basket/basketSlice';
 
 const navItems = [
   { label: 'Home', to: '/' },
@@ -8,6 +11,8 @@ const navItems = [
 ];
 
 export default function Header() {
+  const basketCount = useAppSelector(selectBasketCount);
+
   return (
     <AppBar position="sticky" elevation={0}>
       <Container maxWidth="lg">
@@ -29,7 +34,7 @@ export default function Header() {
             Sports Center
           </Typography>
 
-          <Box component="nav" sx={{ display: 'flex', gap: 1 }}>
+          <Box component="nav" sx={{ display: 'flex', gap: 1, flexGrow: 1 }}>
             {navItems.map((item) => (
               <Button
                 key={item.to}
@@ -43,6 +48,12 @@ export default function Header() {
               </Button>
             ))}
           </Box>
+
+          <IconButton component={RouterLink} to="/basket" color="inherit" aria-label="basket">
+            <Badge badgeContent={basketCount} color="secondary">
+              <ShoppingCartOutlinedIcon />
+            </Badge>
+          </IconButton>
         </Toolbar>
       </Container>
     </AppBar>

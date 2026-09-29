@@ -63,6 +63,9 @@ export default function Header() {
               <Typography variant="body2" sx={{ display: { xs: 'none', sm: 'block' } }}>
                 Hi, {user.username}
               </Typography>
+              <Button component={NavLink} to="/orders" color="inherit" size="small">
+                My orders
+              </Button>
               <Button color="inherit" variant="outlined" size="small" onClick={() => dispatch(signOut())}>
                 Sign out
               </Button>

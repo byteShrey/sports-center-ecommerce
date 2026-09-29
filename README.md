@@ -48,7 +48,15 @@ npm run dev
 
 Client: `http://localhost:5173` — the Vite dev server proxies `/api` to the backend on port `8081`.
 
-Pages so far: home, catalog (search, brand/type filters, sorting, pagination), and product details.
+Pages:
+
+- **Catalog** — search, brand/type filters, sorting, pagination, product details
+- **Basket** — add items, change quantities, remove items; the basket id is kept in `localStorage` so the cart survives reloads
+- **Sign in** — JWT login with the demo account; the token is attached to API calls automatically
+- **Checkout** — shipping address form and order summary (sign-in required)
+- **My orders** — order history and order details (sign-in required)
+
+Delivery is free for orders of ₹5,000 or more, otherwise ₹150.
 
 ## API
 
@@ -83,4 +91,4 @@ CORS is enabled for the React Vite (`5173`) and CRA (`3000`) local origins.
 
 ## Status
 
-Backend is feature-complete. The React client has the catalog browsing flow; basket, checkout, and sign-in screens are next.
+The full shopping flow works end to end: browse, add to basket, sign in, check out, and view orders. Remaining work is polish.

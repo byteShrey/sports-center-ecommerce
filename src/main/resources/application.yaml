@@ -29,3 +29,6 @@ app:
   auth:
     username: shopper
     password: Password123
+  delivery:
+    free-threshold: 5000
+    standard-fee: 150

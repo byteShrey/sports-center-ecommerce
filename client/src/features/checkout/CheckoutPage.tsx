@@ -15,7 +15,6 @@ import { orderApi } from '../../api/orderApi';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import type { ShippingAddress } from '../../models/order';
 import { apiErrorMessage, formatPrice } from '../../utils/format';
-import { deliveryFeeFor } from '../../utils/pricing';
 import BasketSummary from '../basket/BasketSummary';
 import { clearBasket } from '../basket/basketSlice';
 
@@ -81,11 +80,7 @@ export default function CheckoutPage() {
     setSubmitting(true);
     setSubmitError(null);
     try {
-      const order = await orderApi.create({
-        basketId: basket.id,
-        shippingAddress: address,
-        deliveryFee: deliveryFeeFor(basket.subtotal),
-      });
+      const order = await orderApi.create({ basketId: basket.id, shippingAddress: address });
       dispatch(clearBasket());
       navigate(`/orders/${order.id}`, { replace: true, state: { justPlaced: true } });
     } catch (error) {

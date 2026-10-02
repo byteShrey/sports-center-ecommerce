@@ -35,5 +35,4 @@ export interface Order {
 export interface CreateOrderRequest {
   basketId: string;
   shippingAddress: ShippingAddress;
-  deliveryFee: number;
 }

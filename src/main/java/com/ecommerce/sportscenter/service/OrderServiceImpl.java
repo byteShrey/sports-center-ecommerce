@@ -23,14 +23,17 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final BasketService basketService;
     private final OrderMapper orderMapper;
+    private final DeliveryFeeCalculator deliveryFeeCalculator;
 
     public OrderServiceImpl(
             OrderRepository orderRepository,
             BasketService basketService,
-            OrderMapper orderMapper) {
+            OrderMapper orderMapper,
+            DeliveryFeeCalculator deliveryFeeCalculator) {
         this.orderRepository = orderRepository;
         this.basketService = basketService;
         this.orderMapper = orderMapper;
+        this.deliveryFeeCalculator = deliveryFeeCalculator;
     }
 
     @Override
@@ -47,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
                 .shippingAddress(orderMapper.toEntity(request.shippingAddress()))
                 .orderDate(Instant.now())
                 .subTotal(basket.subtotal())
-                .deliveryFee(request.deliveryFee())
+                .deliveryFee(deliveryFeeCalculator.feeFor(basket.subtotal()))
                 .status(OrderStatus.PENDING)
                 .build();
 
@@ -62,8 +65,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public OrderDto findById(Integer orderId) {
-        return orderRepository.findById(orderId)
+    public OrderDto findForBuyer(Integer orderId, String buyerUsername) {
+        // Another buyer's order is reported as missing so order ids cannot be probed.
+        return orderRepository.findByIdAndBuyerUsername(orderId, buyerUsername)
                 .map(orderMapper::toDto)
                 .orElseThrow(() -> ResourceNotFoundException.order(orderId));
     }

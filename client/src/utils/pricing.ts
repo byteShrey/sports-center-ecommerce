@@ -1,3 +1,4 @@
+// Display-only preview; must match app.delivery in the backend, which charges the real fee.
 export const FREE_DELIVERY_THRESHOLD = 5000;
 export const STANDARD_DELIVERY_FEE = 150;
 

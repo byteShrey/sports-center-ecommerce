@@ -9,7 +9,7 @@ public interface OrderService {
 
     OrderDto createOrder(CreateOrderRequest request, String buyerUsername);
 
-    OrderDto findById(Integer orderId);
+    OrderDto findForBuyer(Integer orderId, String buyerUsername);
 
     List<OrderDto> findForBuyer(String buyerUsername);
 }

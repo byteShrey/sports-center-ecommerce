@@ -35,8 +35,8 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<OrderDto> findById(@PathVariable Integer orderId) {
-        return ResponseEntity.ok(orderService.findById(orderId));
+    public ResponseEntity<OrderDto> findById(@PathVariable Integer orderId, Principal principal) {
+        return ResponseEntity.ok(orderService.findForBuyer(orderId, principal.getName()));
     }
 
     @GetMapping

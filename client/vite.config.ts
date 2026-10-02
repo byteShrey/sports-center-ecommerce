@@ -9,4 +9,15 @@ export default defineConfig({
       '/api': 'http://localhost:8081',
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom'],
+          mui: ['@mui/material', '@emotion/react', '@emotion/styled'],
+          state: ['@reduxjs/toolkit', 'react-redux', 'axios'],
+        },
+      },
+    },
+  },
 });

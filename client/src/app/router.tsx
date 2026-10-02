@@ -1,15 +1,13 @@
+import type { ComponentType } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import AppLayout from './layout/AppLayout';
 import HomePage from '../features/home/HomePage';
-import CatalogPage from '../features/catalog/CatalogPage';
-import ProductDetailsPage from '../features/catalog/ProductDetailsPage';
-import BasketPage from '../features/basket/BasketPage';
-import SignInPage from '../features/account/SignInPage';
 import RequireAuth from '../features/account/RequireAuth';
-import CheckoutPage from '../features/checkout/CheckoutPage';
-import OrdersPage from '../features/orders/OrdersPage';
-import OrderDetailsPage from '../features/orders/OrderDetailsPage';
 import NotFoundPage from '../features/errors/NotFoundPage';
+
+const page = (load: () => Promise<{ default: ComponentType }>) => async () => ({
+  Component: (await load()).default,
+});
 
 export const router = createBrowserRouter([
   {
@@ -17,16 +15,16 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: 'catalog', element: <CatalogPage /> },
-      { path: 'catalog/:id', element: <ProductDetailsPage /> },
-      { path: 'basket', element: <BasketPage /> },
-      { path: 'sign-in', element: <SignInPage /> },
+      { path: 'catalog', lazy: page(() => import('../features/catalog/CatalogPage')) },
+      { path: 'catalog/:id', lazy: page(() => import('../features/catalog/ProductDetailsPage')) },
+      { path: 'basket', lazy: page(() => import('../features/basket/BasketPage')) },
+      { path: 'sign-in', lazy: page(() => import('../features/account/SignInPage')) },
       {
         element: <RequireAuth />,
         children: [
-          { path: 'checkout', element: <CheckoutPage /> },
-          { path: 'orders', element: <OrdersPage /> },
-          { path: 'orders/:id', element: <OrderDetailsPage /> },
+          { path: 'checkout', lazy: page(() => import('../features/checkout/CheckoutPage')) },
+          { path: 'orders', lazy: page(() => import('../features/orders/OrdersPage')) },
+          { path: 'orders/:id', lazy: page(() => import('../features/orders/OrderDetailsPage')) },
         ],
       },
       { path: '*', element: <NotFoundPage /> },

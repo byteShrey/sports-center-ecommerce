@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:sports_center;MODE=MySQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+app:
+  cors:
+    allowed-origins: http://localhost:5173
+  jwt:
+    secret: test-only-secret-key-that-is-long-enough-for-hs256
+    expiration-ms: 3600000
+  auth:
+    username: shopper
+    password: Password123
+  delivery:
+    free-threshold: 5000
+    standard-fee: 150

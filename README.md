@@ -1,8 +1,12 @@
 # Sports Center
 
+[![CI](https://github.com/byteShrey/sports-center-ecommerce/actions/workflows/ci.yml/badge.svg)](https://github.com/byteShrey/sports-center-ecommerce/actions/workflows/ci.yml)
+
 A full-stack sports e-commerce app: browse a catalog of shoes, rackets, footballs and kit bags, build a basket, sign in, and place orders.
 
 Built with **Spring Boot 3** and **React 18 + TypeScript**, using **MySQL** for catalog and orders and **Redis** for shopping baskets.
+
+![Catalog page](docs/screenshots/catalog.png)
 
 ## Features
 
@@ -13,6 +17,20 @@ Built with **Spring Boot 3** and **React 18 + TypeScript**, using **MySQL** for 
 - **Order history** — buyers can only see their own orders
 - **Polished UI** — Material UI, responsive layout, loading and error states, route-level code splitting
 
+## Screenshots
+
+| Product details | Basket |
+|-----------------|--------|
+| ![Product details](docs/screenshots/product-details.png) | ![Basket](docs/screenshots/basket.png) |
+
+| Checkout | Order confirmation |
+|----------|--------------------|
+| ![Checkout](docs/screenshots/checkout.png) | ![Order confirmation](docs/screenshots/order-details.png) |
+
+| Order history |
+|---------------|
+| ![Order history](docs/screenshots/orders.png) |
+
 ## Tech stack
 
 | Layer | Technologies |
@@ -21,7 +39,7 @@ Built with **Spring Boot 3** and **React 18 + TypeScript**, using **MySQL** for 
 | Frontend | React 18, TypeScript, Vite, Redux Toolkit, React Router 6, Material UI 5, Axios |
 | Data | MySQL 8 (catalog, orders), Redis 7 (baskets) |
 | Testing | JUnit 5, Mockito, AssertJ, MockMvc, H2 |
-| Tooling | Maven, Docker Compose |
+| Tooling | Maven, Docker Compose, GitHub Actions |
 
 ## Architecture
 
@@ -40,7 +58,17 @@ The backend follows a layered design: controllers → services → repositories,
 
 - JDK 17+
 - Node.js 18+
-- Docker Desktop (for MySQL and Redis)
+- Docker Desktop (for MySQL and Redis) — optional, see the quick start below
+
+### Quick start without Docker
+
+The `demo` profile swaps MySQL for an in-memory H2 database and Redis for an in-memory basket store, so the whole app runs with just Java and Node:
+
+```bash
+./mvnw spring-boot:run -Dspring-boot.run.profiles=demo
+```
+
+Then start the client as in step 3. Data resets every time the API restarts.
 
 ### 1. Start MySQL and Redis
 
@@ -109,12 +137,14 @@ Send the token as `Authorization: Bearer <token>`.
 cd client && npm run build   # frontend: type-check and production build
 ```
 
-The backend suite runs without MySQL or Redis. It covers delivery pricing, order creation, buyer-only order access, and the auth flow end to end (public catalog, rejected anonymous and forged-token requests, login, authenticated order access).
+The backend suite runs without MySQL or Redis. It covers delivery pricing, order creation, buyer-only order access, and the auth flow end to end (public catalog, rejected anonymous and forged-token requests, login, authenticated order access). GitHub Actions runs both checks on every push and pull request.
 
 ## Project structure
 
 ```text
+├── .github/workflows/      # CI: backend tests and client build
 ├── docker/                 # Docker Compose for MySQL and Redis
+├── docs/screenshots/       # Images used in this README
 ├── src/main/java/.../
 │   ├── config/             # Security, CORS, Redis, seed data
 │   ├── controller/         # REST endpoints
@@ -122,7 +152,7 @@ The backend suite runs without MySQL or Redis. It covers delivery pricing, order
 │   ├── entity/             # JPA entities and Redis basket model
 │   ├── exception/          # Global error handling
 │   ├── mapper/             # Entity ↔ DTO mapping
-│   ├── repository/         # JPA, Specifications, Redis repositories
+│   ├── repository/         # JPA, Specifications, Redis + in-memory basket stores
 │   ├── security/           # JWT service, filter, entry point
 │   └── service/            # Business logic
 ├── src/test/               # Unit and integration tests
@@ -138,5 +168,5 @@ The backend suite runs without MySQL or Redis. It covers delivery pricing, order
 
 - User registration with accounts stored in the database (the demo uses a single configured user)
 - Payment provider integration to move orders from `PENDING` to `PAYMENT_RECEIVED`
-- Product images and an admin screen for managing the catalog
+- An admin screen for managing products and uploading real photos
 - Containerising the API and client for one-command startup

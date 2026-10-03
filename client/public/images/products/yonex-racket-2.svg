@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <clipPath id="head"><ellipse cx="200" cy="130" rx="74" ry="96"/></clipPath>
+  </defs>
+  <g transform="rotate(24 200 200)">
+    <g clip-path="url(#head)" stroke="#d7ccc8" stroke-width="2">
+      <path d="M140 34v192M155 34v192M170 34v192M185 34v192M200 34v192M215 34v192M230 34v192M245 34v192M260 34v192"/>
+      <path d="M126 50h148M126 66h148M126 82h148M126 98h148M126 114h148M126 130h148M126 146h148M126 162h148M126 178h148M126 194h148M126 210h148"/>
+    </g>
+    <ellipse cx="200" cy="130" rx="74" ry="96" fill="none" stroke="#c62828" stroke-width="12"/>
+    <ellipse cx="200" cy="130" rx="74" ry="96" fill="none" stroke="#212121" stroke-width="3" stroke-dasharray="30 20"/>
+    <path d="M190 224l10 26 10-26" fill="none" stroke="#c62828" stroke-width="8"/>
+    <rect x="196" y="244" width="8" height="70" fill="#212121"/>
+    <rect x="189" y="312" width="22" height="66" rx="8" fill="#c62828"/>
+    <path d="M189 324l22 8M189 340l22 8M189 356l22 8" stroke="#212121" stroke-width="3"/>
+  </g>
+</svg>

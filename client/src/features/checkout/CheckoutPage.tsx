@@ -10,7 +10,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { orderApi } from '../../api/orderApi';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import type { ShippingAddress } from '../../models/order';
@@ -49,12 +49,18 @@ const validate = (address: ShippingAddress): FieldErrors =>
 
 export default function CheckoutPage() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { basket, loaded } = useAppSelector((state) => state.basket);
   const [address, setAddress] = useState<ShippingAddress>(emptyAddress);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [placedOrderId, setPlacedOrderId] = useState<number | null>(null);
+
+  // Checked before the empty-basket guard: clearing the basket after a successful
+  // order must not bounce the shopper to /basket while the order page loads.
+  if (placedOrderId !== null) {
+    return <Navigate to={`/orders/${placedOrderId}`} replace state={{ justPlaced: true }} />;
+  }
 
   if (!loaded) {
     return (
@@ -81,8 +87,8 @@ export default function CheckoutPage() {
     setSubmitError(null);
     try {
       const order = await orderApi.create({ basketId: basket.id, shippingAddress: address });
+      setPlacedOrderId(order.id);
       dispatch(clearBasket());
-      navigate(`/orders/${order.id}`, { replace: true, state: { justPlaced: true } });
     } catch (error) {
       setSubmitError(apiErrorMessage(error, 'Could not place your order. Please try again.'));
       setSubmitting(false);
